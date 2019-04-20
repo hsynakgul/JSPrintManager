@@ -26,7 +26,6 @@
  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function(obj) {
 	"use strict";
 
 	var ERR_BAD_FORMAT = "File format is not recognized.";
@@ -39,7 +38,7 @@
 	var ERR_READ_DATA = "Error while reading file data.";
 	var ERR_DUPLICATED_NAME = "File already exists.";
 	var CHUNK_SIZE = 512 * 1024;
-	
+
 	var TEXT_PLAIN = "text/plain";
 
 	var appendABViewSupported;
@@ -73,7 +72,7 @@
 		}
 		return table;
 	})();
-	
+
 	// "no-op" codec
 	function NOOP() {}
 	NOOP.prototype.append = function append(bytes, onprogress) {
@@ -296,7 +295,7 @@
 	BlobWriter.prototype = new Writer();
 	BlobWriter.prototype.constructor = BlobWriter;
 
-	/** 
+	/**
 	 * inflate/deflate core functions
 	 * @param worker {Worker} web worker for the task.
 	 * @param initialMessage {Object} initial message to be sent to the worker. should contain
@@ -368,7 +367,7 @@
 					var msg = index === 0 ? initialMessage : {sn : sn};
 					msg.type = 'append';
 					msg.data = array;
-					
+
 					// posting a message with transferables will fail on IE10
 					try {
 						worker.postMessage(msg, [array.buffer]);
@@ -919,48 +918,53 @@
 	function onerror_default(error) {
 		console.error(error);
 	}
-	obj.zip = {
-		Reader : Reader,
-		Writer : Writer,
-		BlobReader : BlobReader,
-		Data64URIReader : Data64URIReader,
-		TextReader : TextReader,
-		BlobWriter : BlobWriter,
-		Data64URIWriter : Data64URIWriter,
-		TextWriter : TextWriter,
-		createReader : function(reader, callback, onerror) {
-			onerror = onerror || onerror_default;
 
-			reader.init(function() {
-				createZipReader(reader, callback, onerror);
-			}, onerror);
-		},
-		createWriter : function(writer, callback, onerror, dontDeflate) {
-			onerror = onerror || onerror_default;
-			dontDeflate = !!dontDeflate;
+	var obj = {
+		zip: {
+			Reader : Reader,
+			Writer : Writer,
+			BlobReader : BlobReader,
+			Data64URIReader : Data64URIReader,
+			TextReader : TextReader,
+			BlobWriter : BlobWriter,
+			Data64URIWriter : Data64URIWriter,
+			TextWriter : TextWriter,
+			createReader : function(reader, callback, onerror) {
+				onerror = onerror || onerror_default;
 
-			writer.init(function() {
-				createZipWriter(writer, callback, onerror, dontDeflate);
-			}, onerror);
-		},
-		useWebWorkers : true,
-		/**
-		 * Directory containing the default worker scripts (z-worker.js, deflate.js, and inflate.js), relative to current base url.
-		 * E.g.: zip.workerScripts = './';
-		 */
-		workerScriptsPath : null,
-		/**
-		 * Advanced option to control which scripts are loaded in the Web worker. If this option is specified, then workerScriptsPath must not be set.
-		 * workerScripts.deflater/workerScripts.inflater should be arrays of urls to scripts for deflater/inflater, respectively.
-		 * Scripts in the array are executed in order, and the first one should be z-worker.js, which is used to start the worker.
-		 * All urls are relative to current base url.
-		 * E.g.:
-		 * zip.workerScripts = {
-		 *   deflater: ['z-worker.js', 'deflate.js'],
-		 *   inflater: ['z-worker.js', 'inflate.js']
-		 * };
-		 */
-		workerScripts : null,
+				reader.init(function() {
+					createZipReader(reader, callback, onerror);
+				}, onerror);
+			},
+			createWriter : function(writer, callback, onerror, dontDeflate) {
+				onerror = onerror || onerror_default;
+				dontDeflate = !!dontDeflate;
+
+				writer.init(function() {
+					createZipWriter(writer, callback, onerror, dontDeflate);
+				}, onerror);
+			},
+			useWebWorkers : true,
+			/**
+			 * Directory containing the default worker scripts (z-worker.js, deflate.js, and inflate.js), relative to current base url.
+			 * E.g.: zip.workerScripts = './';
+			 */
+			workerScriptsPath : null,
+			/**
+			 * Advanced option to control which scripts are loaded in the Web worker. If this option is specified, then workerScriptsPath must not be set.
+			 * workerScripts.deflater/workerScripts.inflater should be arrays of urls to scripts for deflater/inflater, respectively.
+			 * Scripts in the array are executed in order, and the first one should be z-worker.js, which is used to start the worker.
+			 * All urls are relative to current base url.
+			 * E.g.:
+			 * zip.workerScripts = {
+			 *   deflater: ['z-worker.js', 'deflate.js'],
+			 *   inflater: ['z-worker.js', 'inflate.js']
+			 * };
+			 */
+			workerScripts : null,
+
+			Deflater: require('./deflate.js')
+		}
 	};
 
-})(this);
+	module.exports = obj.zip;

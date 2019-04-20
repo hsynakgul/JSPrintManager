@@ -7,8 +7,8 @@
  1. Redistributions of source code must retain the above copyright notice,
  this list of conditions and the following disclaimer.
 
- 2. Redistributions in binary form must reproduce the above copyright 
- notice, this list of conditions and the following disclaimer in 
+ 2. Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in
  the documentation and/or other materials provided with the distribution.
 
  3. The names of the authors may not be used to endorse or promote products
@@ -33,7 +33,6 @@
  * and contributors of zlib.
  */
 
-(function(global) {
 	"use strict";
 
 	// Global
@@ -1608,7 +1607,7 @@
 		function deflateReset(strm) {
 			strm.total_in = strm.total_out = 0;
 			strm.msg = null; //
-			
+
 			that.pending = 0;
 			that.pending_out = 0;
 
@@ -2054,7 +2053,4 @@
 		};
 	}
 
-	// 'zip' may not be defined in z-worker and some tests
-	var env = global.zip || global;
-	env.Deflater = env._jzlib_Deflater = Deflater;
-})(this);
+module.exports = Deflater;
