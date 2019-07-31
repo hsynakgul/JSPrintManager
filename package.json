@@ -1,6 +1,6 @@
 {
   "_from": "jsprintmanager",
-  "_id": "jsprintmanager@2.0.0",
+  "_id": "jsprintmanager@2.0.2",
   "_inBundle": false,
   "_integrity": "sha512-AqPUYk1aZaBe/cVtJq8Rs2lkWqw6sUtFrWHfuCGo22px4Hs5krWclm1QdJhg0VPcDS8AzsU4yAIk5rKXgk/dZA==",
   "_location": "/jsprintmanager",
@@ -19,7 +19,7 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/jsprintmanager/-/jsprintmanager-2.0.0.tgz",
+  "_resolved": "https://registry.npmjs.org/jsprintmanager/-/jsprintmanager-2.0.2.tgz",
   "_shasum": "2646e1624caafd159b55b3dd0a54ddb725a87372",
   "_spec": "jsprintmanager",
   "_where": "C:\\Users\\huseyin\\Code\\bayiloji-client",
@@ -121,5 +121,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "2.0.0"
+  "version": "2.0.2"
 }
